@@ -1,0 +1,11 @@
+event_id,timestamp,host,source_type,artifact_subtype,file_path,user_sid,process_name,event_code,last_write_delta_s,run_count,path_entropy,is_executable,usb_insert_flag,matched_registry,matched_prefetch,matched_lnk,cross_artifact_score,event_severity,label,explain_hint
+E1001,2024-06-10T09:12:34Z,HOST01,EVTX,ProcessCreate,C:\Windows\System32\cmd.exe,S-1-5-21-1000,cmd.exe,4688,12,0,3.2,1,0,1,0,0,0.75,3,1,"Prefetch & EVTX match; cmd process created near registry install"
+E1002,2024-06-10T09:12:40Z,HOST01,Prefetch,Execution,C:\Windows\System32\cmd.exe,S-1-5-21-1000,cmd.exe,,10,3,2.9,1,0,0,1,0,0.68,2,1,"High run_count and matching EVTX ProcessCreate"
+E1003,2024-06-10T09:13:05Z,HOST01,Registry,RunMRU,HKCU\Software\Microsoft\Windows\CurrentVersion\Run\BadApp,"C:\Users\User\BadApp.exe",S-1-5-21-1000,BadApp.exe,,5,0,4.5,1,0,0,0,1,0.82,4,1,"Suspicious Run key, executable path entropy high, LNK present"
+E1004,2024-06-10T09:13:15Z,HOST01,LNK,Shortcut,C:\Users\User\Desktop\BadDoc.lnk,S-1-5-21-1000,explorer.exe,,3,0,5.1,0,0,0,0,1,0.55,2,1,"LNK points to BadApp.exe referenced by RunMRU"
+E1005,2024-06-10T10:01:02Z,HOST02,EVTX,ServiceStart,ServiceX,,SYSTEM,7036,300,0,2.1,0,0,0,0,0,0.15,1,0,"Routine service start, no cross-artifact match"
+E1006,2024-06-10T10:05:00Z,HOST02,Prefetch,Execution,C:\Program Files\GoodApp\good.exe,S-1-5-21-2000,good.exe,,60,15,2.0,1,0,0,0,0,0.12,1,0,"Frequent benign program, low entropy, no registry link"
+E1007,2024-06-10T11:30:21Z,HOST03,EVTX,Logon,Authentication Success,,S-1-5-21-3000,lsass.exe,4624,30,0,1.5,0,1,0,0,0,0.22,1,0,"User logon event; not tied to binary artifacts"
+E1008,2024-06-10T11:31:00Z,HOST03,Registry,USBMRU,HKLM\SYSTEM\MountedDevices,,S-1-5-21-3000,,0,0,3.7,0,1,0,0,0,0.30,2,0,"USB insertion recorded, no further execution seen"
+E1009,2024-06-10T12:05:45Z,HOST04,EVTX,SecurityAlert,PowerShell Script Block Logging,C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe,S-1-5-21-4000,powershell.exe,4104,7,0,4.8,1,0,0,0,0,0.70,4,1,"Script block log with encoded payload, high entropy path"
+E1010,2024-06-10T12:06:10Z,HOST04,Prefetch,Execution,C:\Temp\ps_runner.exe,S-1-5-21-4000,ps_runner.exe,,5,1,4.3,1,0,0,0,0,0.65,3,1,"Short-lived binary executed around PowerShell alert"
